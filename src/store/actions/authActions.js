@@ -1,0 +1,74 @@
+import axios from "axios";
+import {
+  USER_LOADING,
+  USER_LOADED,
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+  GET_FEEDBACK,
+} from "./types";
+
+export const loadUser = () => (dispatch, getState) => {
+  dispatch({
+    type: USER_LOADING,
+  });
+
+  axios
+    .get("http://localhost:4000/api/auth/user", configToken(getState))
+    .then(({ data }) => {
+      dispatch({
+        type: USER_LOADED,
+        payload: data.data,
+      });
+    })
+    .catch(({ response }) => {
+      dispatch({
+        type: GET_FEEDBACK,
+        payload: { type: "danger", message: response.data.message },
+      });
+    });
+};
+
+export const login = (credentials) => (dispatch, getState) => {
+  dispatch({
+    type: USER_LOADING,
+  });
+
+  axios
+    .post("http://localhost:4000/api/auth/login", credentials)
+    .then(({ data }) => {
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: data.data,
+      });
+      dispatch({
+        type: GET_FEEDBACK,
+        payload: { type: "success", message: data.message },
+      });
+    })
+    .catch(({ response }) => {
+      dispatch({
+        type: GET_FEEDBACK,
+        payload: { type: "danger", message: response.data.message },
+      });
+    });
+};
+
+export const logout = () => {
+  return {
+    type: LOGOUT_SUCCESS,
+  };
+};
+export const configToken = (getState) => {
+  const token = getState().auth.token;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  if (token) {
+    config.headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  return config;
+};
