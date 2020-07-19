@@ -30,6 +30,7 @@ const AddLead = ({ addLead, feedback, auth }) => {
               className="form-control"
               name="name"
               placeholder="User Name..."
+              required
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -41,6 +42,7 @@ const AddLead = ({ addLead, feedback, auth }) => {
               className="form-control"
               name="name"
               placeholder="Email Address..."
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -51,6 +53,7 @@ const AddLead = ({ addLead, feedback, auth }) => {
               type="tex"
               className="form-control"
               name="password"
+              required
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />

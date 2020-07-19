@@ -46,6 +46,7 @@ const AddUser = ({ addUser, feedback, auth }) => {
               className="form-control"
               name="name"
               placeholder="Email Address..."
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -56,6 +57,7 @@ const AddUser = ({ addUser, feedback, auth }) => {
               type="password"
               className="form-control"
               name="password"
+              required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />

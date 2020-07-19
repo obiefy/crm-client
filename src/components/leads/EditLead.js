@@ -46,6 +46,7 @@ const EditLead = ({ lead, feedback, auth, getLead, updateLead }) => {
                 className="form-control"
                 name="example-text-input"
                 placeholder="User Name..."
+                required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -57,6 +58,7 @@ const EditLead = ({ lead, feedback, auth, getLead, updateLead }) => {
                 className="form-control"
                 name="example-text-input"
                 placeholder="Email Address..."
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -68,6 +70,7 @@ const EditLead = ({ lead, feedback, auth, getLead, updateLead }) => {
                 className="form-control"
                 name="example-text-input"
                 placeholder="User Name..."
+                required
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />

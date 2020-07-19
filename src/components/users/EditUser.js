@@ -48,6 +48,7 @@ const EditUser = ({ user, feedback, auth, getUser, updateUser }) => {
                 className="form-control"
                 name="example-text-input"
                 placeholder="User Name..."
+                required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -59,6 +60,7 @@ const EditUser = ({ user, feedback, auth, getUser, updateUser }) => {
                 className="form-control"
                 name="example-text-input"
                 placeholder="Email Address..."
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
