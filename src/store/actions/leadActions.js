@@ -1,44 +1,45 @@
 import http from "../http";
+
 import {
-  GET_USERS,
-  GET_USER,
-  ADD_USER,
-  UPDATE_USER,
-  DELETE_USER,
+  GET_LEADS,
+  GET_LEAD,
+  ADD_LEAD,
+  UPDATE_LEAD,
+  DELETE_LEAD,
   GET_FEEDBACK,
   SET_LOADING,
 } from "./types";
 
 import { configToken } from "./authActions";
 
-export const getUsers = () => (dispatch, getState) => {
+export const getLeads = () => (dispatch, getState) => {
   http
-    .get("/users", configToken(getState))
+    .get("/leads", configToken(getState))
     .then(({ data }) => {
       dispatch({
-        type: GET_USERS,
+        type: GET_LEADS,
         payload: data.data,
       });
     })
     .catch((error) => {
       dispatch({
         type: GET_FEEDBACK,
-        payload: [{ error: "new error" }],
+        payload: { type: "danger", message: "new error" },
       });
     });
 };
 
-export const getUser = (id) => async (dispatch, getState) => {
+export const getLead = (id) => async (dispatch, getState) => {
   dispatch({
-    type: GET_USER,
+    type: GET_LEAD,
     payload: {},
   });
 
   http
-    .get(`/users/${id}`, configToken(getState))
+    .get(`/leads/${id}`, configToken(getState))
     .then(({ data }) => {
       dispatch({
-        type: GET_USER,
+        type: GET_LEAD,
         payload: data.data,
       });
     })
@@ -50,16 +51,16 @@ export const getUser = (id) => async (dispatch, getState) => {
     });
 };
 
-export const addUser = (user) => (dispatch, getState) => {
+export const addLead = (payload) => (dispatch, getState) => {
   dispatch({
     type: SET_LOADING,
     payload: true,
   });
   http
-    .post("/users", user, configToken(getState))
+    .post("/leads", payload, configToken(getState))
     .then(({ data }) => {
       dispatch({
-        type: ADD_USER,
+        type: ADD_LEAD,
         payload: data,
       });
       dispatch({
@@ -81,16 +82,16 @@ export const addUser = (user) => (dispatch, getState) => {
     });
 };
 
-export const updateUser = (id, payload) => (dispatch, getState) => {
+export const updateLead = (id, payload) => (dispatch, getState) => {
   dispatch({
     type: SET_LOADING,
     payload: true,
   });
   http
-    .put(`/users/${id}`, payload, configToken(getState))
+    .put(`/leads/${id}`, payload, configToken(getState))
     .then(({ data }) => {
       dispatch({
-        type: UPDATE_USER,
+        type: UPDATE_LEAD,
         payload: data,
       });
       dispatch({
@@ -111,16 +112,16 @@ export const updateUser = (id, payload) => (dispatch, getState) => {
       });
     });
 };
-export const deleteUser = (id) => (dispatch, getState) => {
+export const deleteLead = (id) => (dispatch, getState) => {
   dispatch({
     type: SET_LOADING,
     payload: true,
   });
   http
-    .delete(`/users/${id}`, configToken(getState))
+    .delete(`/leads/${id}`, configToken(getState))
     .then(({ data }) => {
       dispatch({
-        type: DELETE_USER,
+        type: DELETE_LEAD,
         payload: data,
       });
       dispatch({

@@ -1,4 +1,4 @@
-import axios from "axios";
+import http from "../http";
 import {
   USER_LOADING,
   USER_LOADED,
@@ -12,8 +12,8 @@ export const loadUser = () => (dispatch, getState) => {
     type: USER_LOADING,
   });
 
-  axios
-    .get("http://localhost:4000/api/auth/user", configToken(getState))
+  http
+    .get("/auth/user", configToken(getState))
     .then(({ data }) => {
       dispatch({
         type: USER_LOADED,
@@ -33,8 +33,8 @@ export const login = (credentials) => (dispatch, getState) => {
     type: USER_LOADING,
   });
 
-  axios
-    .post("http://localhost:4000/api/auth/login", credentials)
+  http
+    .post("/auth/login", credentials)
     .then(({ data }) => {
       dispatch({
         type: LOGIN_SUCCESS,

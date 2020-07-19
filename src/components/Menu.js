@@ -7,16 +7,33 @@ const Menu = ({ auth }) => {
   const { isAuthenticated, user } = auth;
   const authLinks = (
     <>
-      <li className="nav-item">
-        <Link to="/users/create" className="nav-link pr-3">
-          New User
-        </Link>
-      </li>
-      <li className="nav-item">
-        <Link to="/users" className="nav-link pr-3">
-          Users
-        </Link>
-      </li>
+      {user && user.role === "super-admin" ? (
+        <>
+          <li className="nav-item">
+            <Link to="/users/create" className="nav-link pr-3">
+              New User
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/users" className="nav-link pr-3">
+              Users
+            </Link>
+          </li>
+        </>
+      ) : (
+        <>
+          <li className="nav-item">
+            <Link to="/leads/create" className="nav-link pr-3">
+              New Lead
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/leads" className="nav-link pr-3">
+              Leads
+            </Link>
+          </li>
+        </>
+      )}
       <li className="nav-item">
         <Link to="/profile" className="nav-link pr-3">
           Profile
@@ -39,9 +56,9 @@ const Menu = ({ auth }) => {
   return (
     <nav className="navbar navbar-dark mb-5 bg-faded justify-content-between flex-nowrap flex-row">
       <div className="container">
-        <a href="/" className="navbar-brand">
+        <Link to="/" className="navbar-brand">
           CRM
-        </a>
+        </Link>
         <ul className="nav navbar-nav flex-row">
           {isAuthenticated ? authLinks : guestLinks}
         </ul>

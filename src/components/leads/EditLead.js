@@ -2,47 +2,45 @@ import React, { useState, useEffect } from "react";
 import { Card, Dimmer } from "tabler-react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { getUser, updateUser } from "../../store/actions/userActions";
+import { getLead, updateLead } from "../../store/actions/leadActions";
 import propTypes from "prop-types";
 import { useParams, Link } from "react-router-dom";
 
-const EditUser = ({ user, feedback, auth, getUser, updateUser }) => {
+const EditLead = ({ lead, feedback, auth, getLead, updateLead }) => {
   const { id } = useParams();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
   useEffect(() => {
-    getUser(id);
-    if (user.item.name) {
-      setName(user.item.name);
-      setEmail(user.item.email);
+    getLead(id);
+    if (lead.item.name) {
+      setName(lead.item.name);
+      setEmail(lead.item.email);
+      setPhone(lead.item.phone);
     }
   }, []);
 
   const onUpdate = (e) => {
     e.preventDefault();
-    updateUser(id, { name, email });
+    updateLead(id, { name, email, phone });
   };
 
-  if (
-    !auth.isAuthenticated ||
-    !auth.user.role ||
-    auth.user.role !== "super-admin"
-  ) {
-    return <Redirect to="/login" />;
+  if (!auth.isAuthenticated || !auth.user.role || auth.user.role !== "staff") {
+    return <Redirect to="/profile" />;
   }
 
   return (
     <Card>
       <Card.Header>
-        <Card.Title>Edit User</Card.Title>
+        <Card.Title>Edit Client</Card.Title>
       </Card.Header>
-      {user.item.name ? (
+      {lead.item.name ? (
         <form onSubmit={onUpdate}>
           <Card.Body>
             <div className="mb-3">
-              <label className="form-label">User Name</label>
+              <label className="form-label">Name</label>
               <input
                 type="text"
                 className="form-control"
@@ -63,6 +61,17 @@ const EditUser = ({ user, feedback, auth, getUser, updateUser }) => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
+            <div className="mb-3">
+              <label className="form-label">Phone</label>
+              <input
+                type="text"
+                className="form-control"
+                name="example-text-input"
+                placeholder="User Name..."
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
           </Card.Body>
           <Card.Footer>
             <button
@@ -73,7 +82,7 @@ const EditUser = ({ user, feedback, auth, getUser, updateUser }) => {
               {feedback.isLoading ? "Updating ... " : "Update"}
             </button>
             <Link
-              to={`/users/${user.item._id}`}
+              to={`/leads/${lead.item._id}`}
               className="btn btn-light btn-secondary"
             >
               Cancel
@@ -87,17 +96,17 @@ const EditUser = ({ user, feedback, auth, getUser, updateUser }) => {
   );
 };
 
-EditUser.prototype = {
-  getUser: propTypes.func.isRequired,
-  updateUser: propTypes.func.isRequired,
-  user: propTypes.object.isRequired,
+EditLead.prototype = {
+  getLead: propTypes.func.isRequired,
+  updateLead: propTypes.func.isRequired,
+  lead: propTypes.object.isRequired,
   auth: propTypes.object.isRequired,
   feedback: propTypes.object.isRequired,
 };
 const mapStateToProps = (state) => ({
-  user: state.user,
+  lead: state.lead,
   auth: state.auth,
   feedback: state.feedback,
 });
 
-export default connect(mapStateToProps, { getUser, updateUser })(EditUser);
+export default connect(mapStateToProps, { getLead, updateLead })(EditLead);

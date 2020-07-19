@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
+
 import Users from "./components/users/Users";
 import AddUser from "./components/users/AddUser";
 import User from "./components/users/User";
 import EditUser from "./components/users/EditUser";
+
+import Leads from "./components/leads/Leads";
+import AddLead from "./components/leads/AddLead";
+import Lead from "./components/leads/Lead";
+import EditLead from "./components/leads/EditLead";
+
 import Login from "./components/auth/Login";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -11,6 +18,7 @@ import store from "./store";
 import Feedback from "./components/Feedback";
 import { loadUser } from "./store/actions/authActions";
 import Profile from "./components/auth/Profile";
+import Home from "./components/Home";
 function App() {
   useEffect(() => {
     store.dispatch(loadUser());
@@ -37,11 +45,28 @@ function App() {
                 <Route path="/users">
                   <Users />
                 </Route>
+
+                <Route path="/leads/create">
+                  <AddLead />
+                </Route>
+                <Route path="/leads/:id/edit">
+                  <EditLead />
+                </Route>
+                <Route path="/leads/:id">
+                  <Lead />
+                </Route>
+                <Route path="/leads">
+                  <Leads />
+                </Route>
+
                 <Route path="/login">
                   <Login />
                 </Route>
                 <Route path="/profile">
                   <Profile />
+                </Route>
+                <Route path="/">
+                  <Home />
                 </Route>
                 <Route path="*">
                   <h1>404</h1>
