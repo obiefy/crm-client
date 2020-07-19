@@ -35,6 +35,7 @@ const AddUser = ({ addUser, feedback, auth }) => {
               className="form-control"
               name="name"
               placeholder="User Name..."
+              required
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
